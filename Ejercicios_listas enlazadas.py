@@ -82,6 +82,7 @@ class ListaEnlazada:
         self._size -= 1
         return i
 
+
     def eliminar_posicion(self,posicion):
         p = self._frente
         i = 1

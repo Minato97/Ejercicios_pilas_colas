@@ -1,6 +1,6 @@
 import time
 
-i = 0
+m = 1
 class _Nodo:
     __slots__='_elemento', '_siguiente'
 
@@ -54,8 +54,14 @@ class ListaEnlazada:
         self._size -= 1
         return i
 
+
+
+
     def eliminar_final(self):
-        global i
+        i = self._final._elemento
+        if self.esta_vacio():
+            print("La lista esta vacio")
+            return
         p = self._frente
         while p:
             if p._siguiente == self._final:
@@ -63,9 +69,51 @@ class ListaEnlazada:
                 p._siguiente = None
             p = p._siguiente
         self._size -= 1
-        print(i)
+        return i
 
-def movimiento(T1,T2,m):
+    def eliminar_ultimo(self):
+        if self.esta_vacio():
+            print('Lista vacia')
+            return
+        p = self._frente
+        i = 1
+        while i < len(self) - 1:
+            p = p._siguiente
+            i = i + 1
+        self._final = p
+        p = p._siguiente
+        e = p._elemento
+        self._final._siguiente = None
+        self._size -= 1
+        return e
+
+def eliminar_alternado(T1,T2):
+    i = 0
+    while i < tamano // 2:
+        print("\n\nLista 1")
+        if T1._size == 1:
+            print("\nElemento eliminado\t", T1.eliminar_inicio())
+            print("\nLa lista esta vacia")
+        else:
+            print("\nElemento eliminado\t", T1.eliminar_ultimo())
+        time.sleep(0.5)
+        T1.mostrar()
+        time.sleep(0.5)
+
+        print("\n\nLista 2")
+        if T2._size == 1:
+            print("\nElemento eliminado\t", T2.eliminar_inicio())
+            print("\nLa lista esta vacia")
+        else:
+            print("\nElemento eliminado\t", T2.eliminar_ultimo())
+        time.sleep(0.5)
+        T2.mostrar()
+        time.sleep(0.5)
+        i += 1
+
+
+def movimiento(T1,T2):
+    global m
     T1.añadir_final(T2._final._elemento)
     if T2._size == 1:
         T2.eliminar_inicio()
@@ -78,6 +126,7 @@ def movimiento(T1,T2,m):
         p = p._siguiente
     print("\n-------------------------------------------------------------------------------------")
     print("\nMovimiento ", m)
+    m +=1
     mostrar_todo()
 
 def mostrar_todo():
@@ -86,18 +135,11 @@ def mostrar_todo():
     print("\nLista 2")
     L2.mostrar()
 
-def eliminacion_alterna(T1,T2,m):
-    if T1._size == 1:
-        print("\nSe ha eliminado el dato ",T1.eliminar_inicio())
-    else:
-        print("\nSe ha eliminado el dato ",T1.eliminar_final())
-    if T2._size == 1:
-        print("\nSe ha eliminado el dato ",T2.eliminar_inicio())
-    else:
-        print("\nSe ha eliminado el dato ",T2.eliminar_final())
-    print("\n-------------------------------------------------------------------------------------")
-    print("\nMovimiento de eliminacion ", m)
-    mostrar_todo()
+def num_mov():
+    j = 0
+    while j < tamano//2:
+        movimiento(L2,L1)
+        j += 1
 
 
 
@@ -114,12 +156,9 @@ while j < tamano:
     j += 1
 
 
-movimiento(L2,L1,1)
-movimiento(L2,L1,2)
-movimiento(L2,L1,3)
+num_mov()
 
-eliminacion_alterna(L1,L2,1)
-eliminacion_alterna(L1,L2,2)
-eliminacion_alterna(L1,L2,3)
+while L1._size != 0 and L2._size != 0:
+    eliminar_alternado(L1,L2)
 
 
